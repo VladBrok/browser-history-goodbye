@@ -3,7 +3,7 @@
   "name": "browser history goodbye",
   "version": "1.0",
   "description": "",
-  "permissions": ["history", "tabs"],
+  "permissions": ["history"],
   "background": {
     "service_worker": "script.js",
     "type": "module"
