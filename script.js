@@ -1,48 +1,20 @@
-chrome.runtime.onStartup.addListener(deleteData);
+chrome.runtime.onStartup.addListener(deleteHistory);
 
 chrome.windows.onCreated.addListener(async () => {
   const windows = await chrome.windows.getAll();
   if (windows.length <= 1) {
-    await deleteData();
+    await deleteHistory();
   }
 });
 
-let deleting = false;
-
-async function deleteData() {
-  if (deleting) {
-    return;
-  }
-
-  deleting = true;
-
+async function deleteHistory() {
   try {
-    await chrome.browsingData.remove(
-      {
-        since: 0,
-      },
-      {
-        appcache: true,
-        cache: true,
-        cacheStorage: true,
-        // cookies: true,
-        downloads: true,
-        fileSystems: true,
-        formData: true,
-        history: true,
-        // indexedDB: true,
-        // localStorage: true,
-        passwords: true,
-        webSQL: true,
-      }
-    );
+    await chrome.history.deleteAll();
   } catch (e) {
     console.error(e);
     chrome.windows.create({
       url: "error.html",
       type: "popup",
     });
-  } finally {
-    deleting = false;
   }
 }
