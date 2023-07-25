@@ -1,4 +1,11 @@
-chrome.history.onVisited.addListener(deleteHistory);
+chrome.runtime.onStartup.addListener(deleteHistory);
+
+chrome.windows.onCreated.addListener(async () => {
+  const windows = await chrome.windows.getAll();
+  if (windows.length <= 1) {
+    await deleteHistory();
+  }
+});
 
 async function deleteHistory() {
   try {
