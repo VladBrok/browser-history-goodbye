@@ -3,6 +3,9 @@
   "name": "browser history goodbye",
   "version": "1.0",
   "description": "",
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'"
+  },
   "permissions": ["history", "background"],
   "background": {
     "service_worker": "script.js",
